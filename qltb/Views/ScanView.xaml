@@ -2,27 +2,133 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Background="White">
-    <Grid Margin="20">
-        <StackPanel>
-            <Border BorderBrush="#1B5E20" BorderThickness="2" CornerRadius="10" Padding="20">
-                <StackPanel>
-                    <TextBlock Text="KẾT QUẢ QUÉT THIẾT BỊ" FontSize="16" Foreground="#1B5E20" FontWeight="Bold"/>
-                    <Separator Margin="0,10"/>
 
-                    <TextBlock Text="Tên vũ khí:" FontSize="12" Foreground="Gray"/>
-                    <TextBlock Text="{Binding WeaponName}" FontSize="24" FontWeight="Bold" Margin="0,0,0,15"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-                    <TextBlock Text="Tính năng kỹ chiến thuật:" FontSize="12" Foreground="Gray"/>
-                    <Border Background="#F9F9F9" Padding="15" CornerRadius="5">
-                        <TextBlock Text="{Binding Specifications}" TextWrapping="Wrap" FontSize="14" LineHeight="22"/>
-                    </Border>
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2E3A59" Padding="15">
+            <TextBlock Text="QUÉT QR CODE" 
+                       FontSize="16" 
+                       FontWeight="Bold" 
+                       Foreground="White"/>
+        </Border>
 
-                    <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                        <TextBlock Text="Trạng thái: " VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding Status}" Foreground="Green" FontWeight="Bold" FontSize="16"/>
+        <!-- Content -->
+        <Grid Grid.Row="1" Margin="20">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="600">
+                <Border BorderBrush="#1B5E20" 
+                        BorderThickness="2" 
+                        CornerRadius="10" 
+                        Padding="40"
+                        Background="White">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#1B5E20" Opacity="0.2" BlurRadius="15" ShadowDepth="0"/>
+                    </Border.Effect>
+
+                    <StackPanel>
+                        <TextBlock Text="🔍" 
+                                   FontSize="64" 
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,20"/>
+
+                        <TextBlock Text="CHỨC NĂNG QUÉT QR CODE" 
+                                   FontSize="20" 
+                                   Foreground="#1B5E20" 
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Sử dụng thiết bị quét QR để tra cứu thông tin trang bị" 
+                                   FontSize="14" 
+                                   Foreground="Gray"
+                                   TextWrapping="Wrap"
+                                   TextAlignment="Center"
+                                   Margin="0,0,0,30"/>
+
+                        <Separator Margin="0,0,0,20"/>
+
+                        <TextBlock Text="Hướng dẫn:" 
+                                   FontSize="14" 
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,10"/>
+
+                        <StackPanel>
+                            <TextBlock Margin="0,5">
+                                <Run Text="1. " FontWeight="Bold"/>
+                                <Run Text="Kết nối thiết bị quét QR qua cổng COM"/>
+                            </TextBlock>
+                            <TextBlock Margin="0,5">
+                                <Run Text="2. " FontWeight="Bold"/>
+                                <Run Text="Quét mã QR trên trang bị"/>
+                            </TextBlock>
+                            <TextBlock Margin="0,5">
+                                <Run Text="3. " FontWeight="Bold"/>
+                                <Run Text="Thông tin trang bị sẽ hiển thị tự động"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <Border Background="#FFF3CD" 
+                                BorderBrush="#FFC107" 
+                                BorderThickness="1"
+                                CornerRadius="5"
+                                Padding="15"
+                                Margin="0,20,0,0">
+                            <StackPanel>
+                                <TextBlock Text="⚠️ Lưu ý" 
+                                           FontWeight="Bold"
+                                           Foreground="#856404"
+                                           Margin="0,0,0,5"/>
+                                <TextBlock Text="Chức năng này yêu cầu thiết bị quét QR được kết nối qua Serial Port (COM). Vui lòng cấu hình cổng COM trong Hardware/SerialCdcService.cs"
+                                           TextWrapping="Wrap"
+                                           Foreground="#856404"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Button Content="Cấu hình thiết bị"
+                                HorizontalAlignment="Center"
+                                Margin="0,20,0,0"
+                                Padding="20,10"
+                                Background="#2E3A59"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                IsEnabled="False">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}"
+                                                        CornerRadius="5"
+                                                        Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter HorizontalAlignment="Center"
+                                                                    VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+
+                        <TextBlock Text="(Chức năng đang phát triển)" 
+                                   FontSize="11"
+                                   FontStyle="Italic"
+                                   Foreground="Gray"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,10,0,0"/>
                     </StackPanel>
-                </StackPanel>
-            </Border>
-        </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

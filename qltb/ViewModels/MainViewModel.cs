@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using qltb.Services;
 using qltb.Utils;
 using qltb.Views;
@@ -48,6 +49,10 @@ namespace qltb.ViewModels
             {
                 CurrentUserName = $"{AuthService.CurrentUser.FullName} ({AuthService.CurrentUser.Role})";
             }
+            else
+            {
+                CurrentUserName = "Guest";
+            }
 
             // Mặc định hiển thị danh sách
             NavigateToList();
@@ -70,22 +75,29 @@ namespace qltb.ViewModels
 
         private void Logout()
         {
-            var result = System.Windows.MessageBox.Show(
+            var result = MessageBox.Show(
                 "Bạn có chắc chắn muốn đăng xuất?",
                 "Xác nhận",
-                System.Windows.MessageBoxButton.YesNo,
-                System.Windows.MessageBoxImage.Question);
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
 
-            if (result == System.Windows.MessageBoxResult.Yes)
+            if (result == MessageBoxResult.Yes)
             {
                 var authService = new AuthService();
                 authService.Logout();
 
-                // Đóng MainWindow và mở LoginView
+                // Tìm MainWindow hiện tại
+                var mainWindow = Application.Current.MainWindow;
+
+                // Mở LoginView
                 var loginView = new LoginView();
                 loginView.Show();
 
-                System.Windows.Application.Current.MainWindow.Close();
+                // Đóng MainWindow
+                if (mainWindow != null)
+                {
+                    mainWindow.Close();
+                }
             }
         }
     }

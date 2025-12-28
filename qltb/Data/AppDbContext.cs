@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using qltb.Models;
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,9 +9,9 @@ namespace qltb.Data
 {
     public class AppDbContext : DbContext
     {
-        private static readonly string DbPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "QLTB", "qltb.db");
+        // SQL Server LocalDB connection string
+        private static readonly string ConnectionString =
+            @"Server=(localdb)\mssqllocaldb;Database=QLTB_DB;Integrated Security=true;MultipleActiveResultSets=true;";
 
         public DbSet<User> Users { get; set; }
         public DbSet<EquipmentItem> EquipmentItems { get; set; }
@@ -21,10 +20,7 @@ namespace qltb.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            // Đảm bảo thư mục tồn tại
-            Directory.CreateDirectory(Path.GetDirectoryName(DbPath));
-
-            options.UseSqlite($"Data Source={DbPath}")
+            options.UseSqlServer(ConnectionString)
                    .EnableSensitiveDataLogging(false) // Tắt log sensitive data
                    .EnableDetailedErrors(true);
         }
@@ -37,10 +33,11 @@ namespace qltb.Data
                 entity.HasKey(e => e.Id);
                 entity.HasIndex(e => e.Username).IsUnique();
                 entity.Property(e => e.Username).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.PasswordHash).IsRequired();
+                entity.Property(e => e.PasswordHash).IsRequired().HasMaxLength(500);
                 entity.Property(e => e.FullName).HasMaxLength(100);
                 entity.Property(e => e.Role).IsRequired().HasMaxLength(20);
                 entity.Property(e => e.IsActive).HasDefaultValue(true);
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
             });
 
             // EquipmentItem
@@ -48,20 +45,33 @@ namespace qltb.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.HasIndex(e => e.QRCode).IsUnique();
-                entity.Property(e => e.Name).IsRequired();
-                entity.Property(e => e.CreatedAt).HasDefaultValueSql("datetime('now')");
+                entity.Property(e => e.QRCode).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
+                entity.Property(e => e.Status).HasMaxLength(50);
+                entity.Property(e => e.Location).HasMaxLength(100);
+                entity.Property(e => e.CreatedBy).HasMaxLength(50);
+                entity.Property(e => e.UpdatedBy).HasMaxLength(50);
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
 
                 entity.OwnsOne(e => e.Spec, spec =>
                 {
-                    spec.Property(s => s.Caliber).HasMaxLength(50);
-                    spec.Property(s => s.Weight).HasMaxLength(50);
-                    spec.Property(s => s.Range).HasMaxLength(50);
-                    spec.Property(s => s.Material).HasMaxLength(100);
+                    spec.Property(s => s.Caliber).HasMaxLength(50).HasColumnName("Spec_Caliber");
+                    spec.Property(s => s.Weight).HasMaxLength(50).HasColumnName("Spec_Weight");
+                    spec.Property(s => s.Range).HasMaxLength(50).HasColumnName("Spec_Range");
+                    spec.Property(s => s.Material).HasMaxLength(100).HasColumnName("Spec_Material");
                 });
 
                 entity.HasMany(e => e.TacticalFeatures)
                       .WithOne()
+                      .HasForeignKey("EquipmentItemId")
                       .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // TacticalFeature
+            modelBuilder.Entity<TacticalFeature>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Description).IsRequired().HasMaxLength(500);
             });
 
             // IssueHistory
@@ -69,7 +79,9 @@ namespace qltb.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.HasIndex(e => e.EquipmentItemId);
-                entity.Property(e => e.IssueDate).HasDefaultValueSql("datetime('now')");
+                entity.Property(e => e.IssuedTo).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Note).HasMaxLength(500);
+                entity.Property(e => e.IssueDate).HasDefaultValueSql("GETDATE()");
             });
 
             // AuditLog
@@ -77,13 +89,9 @@ namespace qltb.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.HasIndex(e => e.Time);
-                entity.Property(e => e.Time).HasDefaultValueSql("datetime('now')");
-            });
-
-            // TacticalFeature
-            modelBuilder.Entity<TacticalFeature>(entity =>
-            {
-                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Action).IsRequired().HasMaxLength(200);
+                entity.Property(e => e.User).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Time).HasDefaultValueSql("GETDATE()");
             });
         }
 
