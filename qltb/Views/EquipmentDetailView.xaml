@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="qltb.Views.EquipmentDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Margin="10">
+        <TabControl>
+
+            <!-- TAB 1: THÔNG TIN CHUNG -->
+            <TabItem Header="Thông tin chung">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Tên trang bị:" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Item.Name}" Grid.Row="0" Margin="150,0,0,0"/>
+
+                    <TextBlock Text="Loại:" Grid.Row="1" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Item.Category}" Grid.Row="1" Margin="150,0,0,0"/>
+
+                    <TextBlock Text="Tình trạng:" Grid.Row="2" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Item.Status}" Grid.Row="2" Margin="150,0,0,0"/>
+
+                    <TextBlock Text="Vị trí:" Grid.Row="3" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Item.Location}" Grid.Row="3" Margin="150,0,0,0"/>
+                </Grid>
+            </TabItem>
+
+            <!-- TAB 2: THÔNG SỐ KỸ THUẬT -->
+            <TabItem Header="Thông số kỹ thuật">
+                <Grid Margin="10">
+                    <StackPanel>
+                        <TextBlock Text="Khối lượng:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Item.Spec.Weight}" Margin="10,0,0,10"/>
+
+                        <TextBlock Text="Kích thước:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Item.Spec.Size}" Margin="10,0,0,10"/>
+
+                        <TextBlock Text="Vật liệu:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Item.Spec.Material}" Margin="10,0,0,10"/>
+
+                        <TextBlock Text="Tiêu chuẩn:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Item.Spec.Standard}" Margin="10,0,0,10"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!-- TAB 3: TÍNH NĂNG KỸ – CHIẾN THUẬT -->
+            <TabItem Header="Tính năng kỹ – chiến thuật">
+                <ScrollViewer Margin="10">
+                    <ItemsControl ItemsSource="{Binding Item.TacticalFeatures}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderThickness="1" Padding="8" Margin="0,0,0,10">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Title}"
+                                                   FontWeight="Bold"
+                                                   FontSize="14"/>
+                                        <TextBlock Text="{Binding Description}"
+                                                   TextWrapping="Wrap"
+                                                   Margin="0,5,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</UserControl>
