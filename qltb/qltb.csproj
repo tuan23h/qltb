@@ -239,6 +239,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\EquipmentService.cs" />
+    <Compile Include="Utils\BoolToVisibilityConverter.cs" />
     <Compile Include="Utils\RelayCommand.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\EquipmentDetailViewModel.cs" />

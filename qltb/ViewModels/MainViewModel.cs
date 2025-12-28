@@ -86,11 +86,22 @@ namespace qltb.ViewModels
                 var authService = new AuthService();
                 authService.Logout();
 
-                // Tìm MainWindow hiện tại
-                var mainWindow = Application.Current.MainWindow;
+                // Tìm tất cả các Window đang mở
+                var windows = Application.Current.Windows;
+                Window mainWindow = null;
+
+                foreach (Window window in windows)
+                {
+                    if (window is MainWindow)
+                    {
+                        mainWindow = window;
+                        break;
+                    }
+                }
 
                 // Mở LoginView
                 var loginView = new LoginView();
+                Application.Current.MainWindow = loginView;
                 loginView.Show();
 
                 // Đóng MainWindow

@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using qltb.ViewModels;
 
@@ -10,6 +12,9 @@ namespace qltb.Views
         {
             InitializeComponent();
             DataContext = new EquipmentListViewModel();
+
+            // Thêm converter cho visibility
+            Resources.Add("BoolToVisibilityConverter", new BooleanToVisibilityConverter());
         }
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
