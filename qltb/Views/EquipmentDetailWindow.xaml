@@ -1,0 +1,176 @@
+﻿<Window x:Class="qltb.Views.EquipmentDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Chi tiết trang bị"
+        Height="600" Width="700"
+        WindowStartupLocation="CenterOwner"
+        Background="#F5F5F5">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2E3A59" Padding="15">
+            <StackPanel>
+                <TextBlock Text="CHI TIẾT TRANG BỊ" 
+                           FontSize="16" 
+                           FontWeight="Bold" 
+                           Foreground="White"/>
+                <TextBlock x:Name="TxtEquipmentName" 
+                           FontSize="20" 
+                           FontWeight="Bold" 
+                           Foreground="White"
+                           Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="20">
+                <!-- Thông tin chung -->
+                <Border Background="White" 
+                        CornerRadius="5" 
+                        Padding="20" 
+                        Margin="0,0,0,15"
+                        BorderBrush="#DEE2E6" 
+                        BorderThickness="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="QR Code:" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TxtQRCode" Margin="0,0,0,10"/>
+
+                        <TextBlock Grid.Row="1" Text="Loại trang bị:" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TxtCategory" Margin="0,0,0,10"/>
+
+                        <TextBlock Grid.Row="2" Text="Số lượng:" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="TxtQuantity" Margin="0,0,0,10"/>
+
+                        <TextBlock Grid.Row="3" Text="Trạng thái:" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="TxtStatus" Margin="0,0,0,10"/>
+
+                        <TextBlock Grid.Row="4" Text="Vị trí:" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" x:Name="TxtLocation" Margin="0,0,0,10"/>
+
+                        <TextBlock Grid.Row="5" Text="Ngày tạo:" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="5" Grid.Column="1" x:Name="TxtCreatedAt"/>
+                    </Grid>
+                </Border>
+
+                <!-- Thông số kỹ thuật -->
+                <Border Background="White" 
+                        CornerRadius="5" 
+                        Padding="20" 
+                        Margin="0,0,0,15"
+                        BorderBrush="#DEE2E6" 
+                        BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="THÔNG SỐ KỸ THUẬT" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#2E3A59"
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Text="Cỡ đạn/Khẩu kính:" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TxtCaliber" Margin="0,0,0,10"/>
+
+                            <TextBlock Grid.Row="1" Text="Khối lượng:" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TxtWeight" Margin="0,0,0,10"/>
+
+                            <TextBlock Grid.Row="2" Text="Tầm bắn/sử dụng:" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="TxtRange" Margin="0,0,0,10"/>
+
+                            <TextBlock Grid.Row="3" Text="Vật liệu:" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="TxtMaterial"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tính năng kỹ chiến thuật -->
+                <Border Background="White" 
+                        CornerRadius="5" 
+                        Padding="20"
+                        BorderBrush="#DEE2E6" 
+                        BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="TÍNH NĂNG KỸ - CHIẾN THUẬT" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#2E3A59"
+                                   Margin="0,0,0,15"/>
+
+                        <ItemsControl x:Name="LstFeatures">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#F8F9FA" 
+                                            BorderBrush="#DEE2E6" 
+                                            BorderThickness="1" 
+                                            CornerRadius="3"
+                                            Padding="12" 
+                                            Margin="0,0,0,10">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="• " 
+                                                       FontSize="16" 
+                                                       FontWeight="Bold"
+                                                       VerticalAlignment="Top"
+                                                       Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding Description}" 
+                                                       TextWrapping="Wrap"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <TextBlock x:Name="TxtNoFeatures"
+                                   Text="Chưa có thông tin tính năng kỹ - chiến thuật"
+                                   FontStyle="Italic"
+                                   Foreground="Gray"
+                                   Visibility="Collapsed"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Footer -->
+        <Border Grid.Row="2" Background="#F8F9FA" BorderBrush="#DEE2E6" BorderThickness="0,1,0,0" Padding="20">
+            <Button Content="Đóng" 
+                    Width="100" 
+                    Height="35"
+                    Background="#6C757D"
+                    Foreground="White"
+                    BorderThickness="0"
+                    HorizontalAlignment="Right"
+                    Cursor="Hand"
+                    Click="BtnClose_Click"/>
+        </Border>
+    </Grid>
+</Window>

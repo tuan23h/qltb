@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using qltb.Models;
+using System.Windows.Input;
 using qltb.ViewModels;
 
 namespace qltb.Views
@@ -12,17 +12,12 @@ namespace qltb.Views
             DataContext = new EquipmentListViewModel();
         }
 
-        private void OnRowDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (((DataGrid)sender).SelectedItem is EquipmentItem item)
+            var vm = DataContext as EquipmentListViewModel;
+            if (vm?.SelectedItem != null)
             {
-                var detailView = new EquipmentDetailView
-                {
-                    DataContext = new EquipmentDetailViewModel(item)
-                };
-
-                ((MainViewModel)System.Windows.Application.Current.MainWindow.DataContext)
-                    .CurrentView = detailView;
+                vm.ViewDetailCommand.Execute(null);
             }
         }
     }

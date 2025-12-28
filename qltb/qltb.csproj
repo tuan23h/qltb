@@ -202,6 +202,8 @@
     <Compile Include="Models\EquipmentSpec.cs" />
     <Compile Include="Models\IssueHistory.cs" />
     <Compile Include="Models\TacticalFeature.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\EquipmentService.cs" />
     <Compile Include="Utils\RelayCommand.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -211,8 +213,17 @@
     <Compile Include="Views\EquipmentDetailView.xaml.cs">
       <DependentUpon>EquipmentDetailView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EquipmentDetailWindow.xaml.cs">
+      <DependentUpon>EquipmentDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EquipmentEditDialog.xaml.cs">
+      <DependentUpon>EquipmentEditDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EquipmentListView.xaml.cs">
       <DependentUpon>EquipmentListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -224,6 +235,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\StatisticsView.xaml.cs">
+      <DependentUpon>StatisticsView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Assets\Styles\Theme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -232,7 +246,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EquipmentDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EquipmentEditDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EquipmentListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -241,6 +267,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ScanView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatisticsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
